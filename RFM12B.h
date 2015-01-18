@@ -210,6 +210,8 @@ class RFM12B
     volatile uint8_t * GetData();
     uint8_t GetDataLen(); //how many bytes were received
     uint8_t GetSender();
+	uint8_t GetDestination();
+	
     bool LowBattery();
     bool ACKRequested();
     bool ACKReceived(uint8_t fromNodeID=0);

@@ -363,6 +363,10 @@ bool RFM12B::LowBattery() {
   return (Control(0x0000) & RF_LBD_BIT) != 0;
 }
 
+uint8_t RFM12B::GetDestination(){
+	return RF12_DESTID;
+}
+
 uint8_t RFM12B::GetSender(){
   return RF12_SOURCEID;
 }
