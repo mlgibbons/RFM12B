@@ -66,13 +66,16 @@
 
 /// Shorthand for RF12 group byte in rf12_buf.
 #define rf12_grp        rf12_buf[0]
+
 /// pointer to 1st header byte in rf12_buf (CTL + DESTINATIONID)
 #define rf12_hdr1        rf12_buf[1]
+
 /// pointer to 2nd header byte in rf12_buf (ACK + SOURCEID)
 #define rf12_hdr2        rf12_buf[2]
 
 /// Shorthand for RF12 length byte in rf12_buf.
 #define rf12_len        rf12_buf[3]
+
 /// Shorthand for first RF12 data byte in rf12_buf.
 #define rf12_data       (rf12_buf + 4)
 
