@@ -34,7 +34,7 @@ bool requestACK=false;
 void setup()
 {
   Serial.begin(SERIAL_BAUD);
-  radio.Initialize(NODEID, RF12_433MHZ, NETWORKID);
+  radio.Initialize(NODEID, RF12_868MHZ, NETWORKID);
   radio.Encrypt(KEY);
   radio.Sleep(); //sleep right away to save power
   Serial.println("Transmitting...\n\n");
