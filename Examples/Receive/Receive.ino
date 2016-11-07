@@ -25,6 +25,7 @@ void setup()
 {
   radio.Initialize(NODEID, RF12_433MHZ, NETWORKID);
   radio.Encrypt(KEY);      //comment this out to disable encryption
+  radio.EnablePromiscuousMode(false);  // switch to true to receive packets for all destinations in the group 
   Serial.begin(SERIAL_BAUD);
   Serial.println("Listening...");
 }

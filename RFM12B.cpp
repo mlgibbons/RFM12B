@@ -8,6 +8,8 @@
 uint8_t RFM12B::cs_pin;                // CS pin for SPI
 uint8_t RFM12B::nodeID;                // address of this node
 uint8_t RFM12B::networkID;             // network group ID
+bool RFM12B::promiscuousModeEnabled;
+
 long RFM12B::rf12_seq;
 uint32_t RFM12B::seqNum;
 uint32_t RFM12B::cryptKey[4];
@@ -117,6 +119,7 @@ void RFM12B::Initialize(uint8_t ID, uint8_t freqBand, uint8_t networkid, uint8_t
   cs_pin = SS_BIT;
   nodeID = ID;
   networkID = networkid;
+  promiscuousModeEnabled = false;
   SPIInit();
   XFER(0x0000); // intitial SPI transfer added to avoid power-up problem
   XFER(RF_SLEEP_MODE); // DC (disable clk pin), enable lbd
@@ -268,7 +271,7 @@ bool RFM12B::ReceiveComplete() {
     rxstate = TXIDLE;
     if (rf12_len > RF12_MAXDATA)
       rf12_crc = 1; // force bad crc if packet length is invalid
-    if (RF12_DESTID == 0 || RF12_DESTID == nodeID) { //if (!(rf12_hdr & RF12_HDR_DST) || (nodeID & NODE_ID) == 31 || (rf12_hdr & RF12_HDR_MASK) == (nodeID & NODE_ID)) {
+    if (RF12_DESTID == 0 || RF12_DESTID == nodeID || promiscuousModeEnabled==true) { //if (!(rf12_hdr & RF12_HDR_DST) || (nodeID & NODE_ID) == 31 || (rf12_hdr & RF12_HDR_MASK) == (nodeID & NODE_ID)) {
       if (rf12_crc == 0 && crypter != 0)
         crypter(false);
       else
@@ -447,4 +450,9 @@ void RFM12B::Encrypt(const uint8_t* key, uint8_t keyLen) {
       ((uint8_t*) cryptKey)[i] = key[i];
     crypter = CryptFunction;
   } else crypter = 0;
+}
+
+void RFM12B::EnablePromiscuousMode(bool flag)
+{
+	promiscuousModeEnabled = flag; 
 }

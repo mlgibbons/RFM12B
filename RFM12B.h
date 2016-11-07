@@ -185,7 +185,9 @@ class RFM12B
 
     static uint8_t networkID;         // network group
     static uint8_t nodeID;            // address of this node
-    static const byte DATAMAXLEN;
+	static bool promiscuousModeEnabled;  // if true packets for all destinations in the network group will be received
+	
+	static const byte DATAMAXLEN;
     volatile uint8_t* Data;
     volatile uint8_t* DataLen;
     
@@ -210,6 +212,8 @@ class RFM12B
     void Sleep();
     void Wakeup();
     
+	void EnablePromiscuousMode(bool flag);
+
     volatile uint8_t * GetData();
     uint8_t GetDataLen(); //how many bytes were received
     uint8_t GetSender();
